@@ -43,7 +43,7 @@ storage.create = (dir, file, data, callback) => {
  * @param {*} callback 
  */
 storage.read = (dir, file, callback) => {
-    fs.read(storage.baseDir+dir+'/'+file+'.json', (err, data) => {
+    fs.readFile(storage.baseDir+dir+'/'+file+'.json', 'utf8', (err, data) => {
         callback(err, data);
     });
 };

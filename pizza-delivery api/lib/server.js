@@ -46,13 +46,14 @@ var httpServer = http.createServer((req, res) => {
         payload = typeof payload === "object" ? payload : {};
 
         // close the request
+        res.setHeader("Content-Type", "application/json");
         res.writeHead(statusCode);
         res.end(JSON.stringify(payload));
       });
     } catch (error) {
         // close the request
-        res.writeHead(400);
-        res.end("Request body should be object.");
+        res.writeHead(500);
+        res.end("Internal server error.");
     }
   });
 });
@@ -61,7 +62,7 @@ server.init = (callback) => {
   // Start the listen the port 80
   httpServer.listen(8080, () => {
     callback(false);
-    console.log("Pizza delivery API is listening!");
+    console.log("Pizza delivery API is listening on port 8080");
   });
 };
 
