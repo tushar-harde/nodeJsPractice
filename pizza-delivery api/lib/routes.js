@@ -15,7 +15,7 @@ handler.user = (data, callback) => {
     if (methods.indexOf(data.method.toLowerCase()) >= 0) {
         // call the _user function according to the request method
         const method = data.method.toLowerCase();
-        _user[method](data.payload, callback);
+        _user[method](data, callback);
     } else {
         callback(405, {'error': 'Method not allowed.'})
     }
@@ -27,7 +27,7 @@ handler.token = (data, callback) => {
     if (methods.indexOf(data.method.toLowerCase()) >= 0) {
         // call the _user function according to the request method
         const method = data.method.toLowerCase();
-        _token[method](data.payload, callback);
+        _token[method](data, callback);
     } else {
         callback(405, {'error': 'Method not allowed.'})
     }

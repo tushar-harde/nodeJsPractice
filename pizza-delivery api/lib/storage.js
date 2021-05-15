@@ -59,7 +59,7 @@ storage.update = (dir, file, data, callback) => {
     fs.open(storage.baseDir+dir+'/'+file+'.json', 'r+', (err, fileDescriptor) => {
         if (!err && fileDescriptor) {
             var stringData = JSON.stringify(data);
-            fs.truncate(fileDescriptor, (err) => {
+            fs.ftruncate(fileDescriptor, (err) => {
                 if (!err) {
                     fs.writeFile(fileDescriptor, stringData, (err) => {
                         if (!err) {
