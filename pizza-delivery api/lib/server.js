@@ -20,6 +20,9 @@ var httpServer = http.createServer((req, res) => {
   // get the query string object
   var queryStringObject = parseUrl.query;
 
+  // get the http request headers
+  var headers = req.headers;
+
   // get the payload
   var decoder = new StringDecoder("utf8");
   var buffer = "";
@@ -39,6 +42,7 @@ var httpServer = http.createServer((req, res) => {
         method: method,
         payload: JSON.parse(buffer),
         queryStringObject: queryStringObject,
+        headers: headers,
       };
 
       activeHandler(data, (statusCode, payload) => {
@@ -51,9 +55,9 @@ var httpServer = http.createServer((req, res) => {
         res.end(JSON.stringify(payload));
       });
     } catch (error) {
-        // close the request
-        res.writeHead(500);
-        res.end("Internal server error.");
+      // close the request
+      res.writeHead(500);
+      res.end("Internal server error.");
     }
   });
 });
