@@ -32,16 +32,23 @@ _auth.authenticate = (userInfo) => {
  * @param {*} tokenString
  */
 _auth.authorized = (tokenString) => {
-  return new Promise((resolve, rejects) => {
-    storage.read("tokens", tokenString, (error, data) => {
-      if (!error) {
-        data = JSON.parse(data);
-        resolve({ user: data.email });
-      } else {
-        rejects({ error: "Invalid token." });
-      }
-    });
-  });
+  const bearer = tokenString.split(" ");
+  var token = bearer[1];
+  token = typeof token === "string" && token.trim().length > 0 ? token : false;
+  if (token) {
+    return new Promise((resolve, reject) => {
+      storage.read("tokens", token, (error, data) => {
+        if (!error) {
+          data = JSON.parse(data);
+          resolve({ email: data.email });
+        } else {
+          reject({ error: "Invalid token." });
+        }
+      });
+    }); 
+  } else {
+    reject({ error: "Invalid token." });
+  }
 };
 
 module.exports = _auth;

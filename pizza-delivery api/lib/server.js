@@ -40,11 +40,11 @@ var httpServer = http.createServer((req, res) => {
       var data = {
         path: path,
         method: method,
-        payload: JSON.parse(buffer),
+        payload: buffer.length > 0 ? JSON.parse(buffer) : {},
         queryStringObject: queryStringObject,
         headers: headers,
       };
-
+      
       activeHandler(data, (statusCode, payload) => {
         statusCode = typeof statusCode === "number" ? statusCode : 200;
         payload = typeof payload === "object" ? payload : {};
@@ -57,7 +57,7 @@ var httpServer = http.createServer((req, res) => {
     } catch (error) {
       // close the request
       res.writeHead(500);
-      res.end("Internal server error.");
+      res.end(error.toString());
     }
   });
 });

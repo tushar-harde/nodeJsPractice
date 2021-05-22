@@ -2,6 +2,7 @@
 var _user = require("./user");
 var _token = require("./token");
 var _menu = require("./menu");
+var _cart = require("./cart");
 
 // router handler
 handler = {};
@@ -44,12 +45,24 @@ handler.menu = (data, callback) => {
   }
 };
 
+handler.cart = (data, callback) => {
+  var methods = ["get", "post", "put", "delete"];
+
+  if (methods.indexOf(data.method.toLowerCase()) >= 0) {
+    const method = data.method.toLowerCase();
+    _cart[method](data, callback);
+  } else {
+    callback(405, { error: "Method not allowed." });
+  }
+};
+
 // routes
 var routes = {
   "*": handler.notFound,
   user: handler.user,
   token: handler.token,
   menu: handler.menu,
+  cart: handler.cart
 };
 
 module.exports = routes;

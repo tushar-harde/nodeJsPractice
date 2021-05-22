@@ -19,30 +19,23 @@ _menu.post = (data, callback) => {
  * @param {*} callback
  */
 _menu.get = (data, callback) => {
-  const bearerHeader = data.headers.authorization;
-  if (bearerHeader) {
-    const bearer = bearerHeader.split(" ");
-    var token = bearer[1];
-    token = typeof token === "string" && token.trim().length > 0 ? token : false;
-    if (token) {
-      auth
-        .authorized(token)
-        .then((email) => {
-          storage.read("menu", "menu", (error, menu) => {
-            if (!error) {
-              var menu = JSON.parse(menu);
-              callback(200, menu);
-            } else {
-              callback(500, { msg: "Internal server error" });
-            }
-          });
-        })
-        .catch((error) => {
-          callback(401, { msg: "Invalid token id." });
+  const token = data.headers.authorization;
+  if (token) {
+    auth
+      .authorized(token)
+      .then((email) => {
+        storage.read("menu", "menu", (error, menu) => {
+          if (!error) {
+            var menu = JSON.parse(menu);
+            callback(200, menu);
+          } else {
+            callback(500, { msg: "Internal server error" });
+          }
         });
-    } else {
-      callback(401, { msg: "You have to login to see menu." });
-    }
+      })
+      .catch((error) => {
+        callback(401, { msg: "Invalid token id." });
+      });
   } else {
     callback(403, { msg: "You have to login to see menu." });
   }
