@@ -1,0 +1,1 @@
+You will find postman documentaion for API here https://documenter.getpostman.com/view/13476653/TzefAiUi
