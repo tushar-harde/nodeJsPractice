@@ -57,12 +57,12 @@ _payment.purchase = (amount, currency, description, source, email) => {
 
 _payment.sendReceipt = (email, amount) => {
     return new Promise((resolve, reject) => {
-        var apikey = 'api:dd0bc9b4ec95bc03355390b82b442340-1f1bd6a9-4deee697';
+        var apikey = 'api:xxxx';
         var requestDetails = {
             'protocol': 'https:',
             'hostname': 'api.mailgun.net',
             'method': 'POST',
-            'path': '/v3/sandbox9e1712c1f4b84e38b4bb3bc16a1cbd3f.mailgun.org/messages',
+            'path': '/v3/sandboxxxxx.mailgun.org/messages',
             'headers':
             {
                 'Authorization': `Basic ` + Buffer.from(apikey, 'utf8').toString('base64'),
@@ -71,7 +71,7 @@ _payment.sendReceipt = (email, amount) => {
         };
     
         var payload = {
-            from: 'Excited User <mailgun@sandbox9e1712c1f4b84e38b4bb3bc16a1cbd3f.mailgun.org>',
+            from: 'Excited User <mailgun@sandboxxxxx.mailgun.org>',
             to: 'tusharharde55555@gmail.com',
             subject: 'Payment receipt',
             text: 'Your payment for Rs. '+ amount +' has successfully done.'
